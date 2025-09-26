@@ -42,6 +42,36 @@ notebooks/
 4. Automate quality checks and alerting for data latency/missingness.
 5. Document data contracts and publish sample datasets for modeling team.
 
+## Live Scores Prototype API
+
+This repository now includes a FastAPI application that scrapes match results for the
+five major European leagues (Premier League, La Liga, Serie A, Bundesliga, Ligue 1)
+from ESPN's public scoreboards. The service provides both a REST endpoint and a
+lightweight HTML dashboard that allows analysts to:
+
+- Browse fixtures for a specific date.
+- Review recent matches for a selected team (Team 1 or Team 2).
+- Inspect head-to-head history between two clubs within the last 120 days.
+
+### Getting Started
+
+```bash
+cd repos/data-pipeline
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+PYTHONPATH=src uvicorn scores_api.main:app --reload
+```
+
+Open http://127.0.0.1:8000/ to use the interactive dashboard or call the JSON API
+directly at http://127.0.0.1:8000/api/matches.
+
+### Running Tests
+
+```bash
+pytest
+```
+
 ## Key Risks & Mitigations
 - **Website Blocking**: Employ rotating proxies, captcha solvers, and fall back to paid APIs.
 - **Schema Drift**: Implement contract tests with automated alerts and fallback parsers.
